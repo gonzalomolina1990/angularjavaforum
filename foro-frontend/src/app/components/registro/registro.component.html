@@ -1,0 +1,16 @@
+<h2>Registro de Usuario</h2>
+<form (ngSubmit)="registrar()">
+<label>
+  Nombre de usuario:
+  <input type="text" [(ngModel)]="username" name="username" required>
+</label>
+<br>
+<label>
+  Contraseña:
+  <input type="password" [(ngModel)]="password" name="password" required>
+</label>
+<br>
+<button type="submit">Registrarse</button>
+</form>
+
+<div *ngIf="mensaje">{{ mensaje }}</div>

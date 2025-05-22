@@ -1,0 +1,12 @@
+<div class="container">
+ <h1 class="my-4">Foro Angular + Java</h1>
+ <div *ngIf="!usuarioLogueado">
+   <app-registro></app-registro>
+   <hr>
+   <app-login></app-login>
+ </div>
+ <div *ngIf="usuarioLogueado">
+   <p>Bienvenido, {{ usuarioLogueado }} <button class="btn btn-link" (click)="logout()">Cerrar sesión</button></p>
+ </div>
+    <app-temas></app-temas>
+</div>

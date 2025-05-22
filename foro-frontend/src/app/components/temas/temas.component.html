@@ -1,0 +1,37 @@
+<div class="container mt-4">
+<h2>Temas del Foro</h2>
+<form *ngIf="usuarioLogueado" (ngSubmit)="crearTema()" class="mb-4 card card-body">
+  <div class="mb-3">
+    <label class="form-label">Título</label>
+    <input type="text" [(ngModel)]="titulo" name="titulo" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Contenido</label>
+    <textarea [(ngModel)]="contenido" name="contenido" class="form-control" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Crear Tema</button>
+  <span class="ms-3 text-success" *ngIf="mensaje">{{ mensaje }}</span>
+</form>
+<p *ngIf="!usuarioLogueado">Debes iniciar sesión para crear un tema.</p>
+
+
+<div *ngFor="let tema of temas" class="card mb-3">
+  <div class="card-body">
+    <h5 class="card-title">{{ tema.titulo }}</h5>
+    <p class="card-text">{{ tema.contenido }}</p>
+    <p class="text-muted mb-1">
+    Publicado por <b>{{ tema.username }}</b>
+    el {{ tema.fechaCreacion | date:'short' }}
+    </p>
+    <div>
+      <button *ngIf="usuarioLogueado" class="btn btn-outline-success btn-sm me-2" (click)="votarPositivo(tema.id!)">
+      👍 {{ tema.votosPositivos || 0 }}
+      </button>
+      <button *ngIf="usuarioLogueado" class="btn btn-outline-danger btn-sm me-2" (click)="votarNegativo(tema.id!)">
+      👎 {{ tema.votosNegativos || 0 }}
+      </button>
+    </div>
+        <app-comentarios [temaId]="tema.id!"></app-comentarios>
+  </div>
+</div>
+</div>
