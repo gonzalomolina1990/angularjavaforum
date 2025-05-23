@@ -17,4 +17,4 @@ RUN ./mvnw clean package -DskipTests
 EXPOSE 8080
 
 # Comando para ejecutar la app
-CMD ["java", "-jar", "target/$(ls target | grep '.jar$' | head -n 1)"]
+CMD ["java", "-jar", "target/foro-backend-0.0.1-SNAPSHOT.jar"]
