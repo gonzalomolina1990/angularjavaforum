@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import java.util.Optional;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://angularjavaforum.vercel.app")
 @RestController
 @RequestMapping("/api/comentarios")
 public class ComentarioController {

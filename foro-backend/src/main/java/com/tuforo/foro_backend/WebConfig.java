@@ -8,15 +8,15 @@ import org.springframework.lang.NonNull;
 
 @Configuration
 public class WebConfig {
- @Bean
- public WebMvcConfigurer corsConfigurer() {
-     return new WebMvcConfigurer() {
-         @Override
-         public void addCorsMappings(@NonNull CorsRegistry registry) {
-             registry.addMapping("/**")
-                     .allowedOrigins("http://localhost:4200")
-                     .allowedMethods("*");
-         }
-     };
- }
+@Bean
+public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurer() {
+        @Override
+        public void addCorsMappings(@NonNull CorsRegistry registry) {
+            registry.addMapping("/**")
+                    .allowedOrigins("https://angularjavaforum.vercel.app")
+                    .allowedMethods("*");
+        }
+    };
+}
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-
+@CrossOrigin(origins = "https://angularjavaforum.vercel.app")
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {

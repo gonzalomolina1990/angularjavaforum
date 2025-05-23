@@ -12,7 +12,7 @@ password: string;
 providedIn: 'root'
 })
 export class UsuarioService {
-private apiUrl = 'http://localhost:8080/api/usuarios';
+private apiUrl = 'https://foro-backend-5nf9.onrender.com/api/usuarios';
 
 constructor(private http: HttpClient) {}
 

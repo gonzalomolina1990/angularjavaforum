@@ -15,7 +15,7 @@ import java.util.List;
 import com.tuforo.foro_backend.dto.TemaDTO;
 
 
-
+@CrossOrigin(origins = "https://angularjavaforum.vercel.app")
 @RestController
 @RequestMapping("/api/temas")
 public class TemaController {

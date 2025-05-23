@@ -22,7 +22,7 @@ usuarioId: number;
 providedIn: 'root'
 })
 export class ComentarioService {
-apiUrl = 'http://localhost:8080/api/comentarios';
+apiUrl = 'https://foro-backend-5nf9.onrender.com/api/comentarios';
 
 constructor(private http: HttpClient) {}
 

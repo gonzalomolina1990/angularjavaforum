@@ -17,7 +17,7 @@ fechaCreacion: string;
 providedIn: 'root'
 })
 export class TemaService {
-apiUrl = 'http://localhost:8080/api/temas';
+apiUrl = 'https://foro-backend-5nf9.onrender.com/api/temas';
 
 constructor(private http: HttpClient) {}
 
