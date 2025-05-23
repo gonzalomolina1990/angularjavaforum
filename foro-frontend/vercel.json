@@ -1,5 +1,5 @@
 {
-"outputDirectory": "dist/foro-frontend",
+"outputDirectory": "dist/foro-frontend/browser",
 "rewrites": [
   { "source": "/(.*)", "destination": "/" }
 ]
