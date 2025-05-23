@@ -7,10 +7,10 @@ id?: number;
 titulo: string;
 contenido: string;
 usuarioId?: number;
-votosPositivos?: number;
-votosNegativos?: number;
 username: string;
 fechaCreacion: string;
+votosPositivos: number;
+votosNegativos: number;
 }
 
 @Injectable({

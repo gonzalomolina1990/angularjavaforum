@@ -40,18 +40,22 @@ public class TemaController {
       }
   }
 
-  @GetMapping("/todos")
-  public List<TemaDTO> listarTemas() {
-    return temaRepository.findAll().stream()
-        .map(tema -> new TemaDTO(
-            tema.getId(),
-            tema.getTitulo(),
-            tema.getContenido(),
-            tema.getUsuario().getUsername(),
-            tema.getFechaCreacion()
-        ))
-        .collect(Collectors.toList());
-  }
+@GetMapping("/todos")
+public List<TemaDTO> listarTemas() {
+  return temaRepository.findAll().stream().map(tema -> {
+      int positivos = votoRepository.countByTemaAndPositivo(tema, true);
+      int negativos = votoRepository.countByTemaAndPositivo(tema, false);
+      return new TemaDTO(
+          tema.getId(),
+          tema.getTitulo(),
+          tema.getContenido(),
+          tema.getUsuario().getUsername(),
+          tema.getFechaCreacion(),
+          positivos,
+          negativos
+      );
+  }).collect(Collectors.toList());
+}
 
 // Recibe el ID del usuario que vota
 @PostMapping("/{id}/votar-positivo")
