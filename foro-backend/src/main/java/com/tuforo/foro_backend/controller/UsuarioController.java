@@ -9,6 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.List;
+
 
 @CrossOrigin(origins = "https://angularjavaforum.vercel.app")
 @RestController
@@ -34,6 +37,12 @@ public ResponseEntity<?> login(@RequestBody Usuario usuario) {
   }
 }
 
+@GetMapping("/todos")
+public List<UsuarioDTO> listarUsuarios() {
+  return usuarioRepository.findAll().stream()
+      .map(u -> new UsuarioDTO(u.getId(), u.getUsername(), u.getRol()))
+      .collect(Collectors.toList());
+}
 
 @PostMapping("/registro")
 public ResponseEntity<?> registrarUsuario(@RequestBody Usuario usuario) {
