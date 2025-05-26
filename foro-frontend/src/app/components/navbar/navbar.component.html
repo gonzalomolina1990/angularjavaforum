@@ -5,7 +5,7 @@
     <ng-container *ngIf="usuarioLogueado; else noLogin">
       <span class="navbar-text me-3">Bienvenido, <b>{{ usuarioLogueado }}</b></span>
       <button class="btn btn-outline-light btn-sm" (click)="onLogout()">Logout</button>
-   ng-container>
+    </ng-container>
     <ng-template #noLogin>
       <span class="navbar-text text-light">No has iniciado sesión</span>
     </ng-template>
