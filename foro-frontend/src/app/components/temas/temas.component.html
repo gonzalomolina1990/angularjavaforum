@@ -21,21 +21,33 @@
 
 <div *ngFor="let tema of temas" class="card mb-3">
   <div class="card-body">
-    <h5 class="card-title">{{ tema.titulo }}</h5>
-    <p class="card-text">{{ tema.contenido }}</p>
-    <p class="text-muted mb-1">
-    Publicado por <b>{{ tema.username }}</b>
-    el {{ tema.fechaCreacion | date:'short' }}
-    </p>
-    <div>
-      <button *ngIf="usuarioLogueado" class="btn btn-outline-success btn-sm me-2" (click)="votarPositivo(tema.id!)">
-      👍 {{ tema.votosPositivos || 0 }}
-      </button>
-      <button *ngIf="usuarioLogueado" class="btn btn-outline-danger btn-sm me-2" (click)="votarNegativo(tema.id!)">
-      👎 {{ tema.votosNegativos || 0 }}
-      </button>
-    </div>
-        <app-comentarios [temaId]="tema.id!"></app-comentarios>
+  <ng-container *ngIf="temaEditando?.id !== tema.id; else edicionTema">
+      <h5 class="card-title">{{ tema.titulo }}</h5>
+      <p class="card-text">{{ tema.contenido }}</p>
+      <button *ngIf="esAdmin" class="btn btn-danger btn-sm me-2" (click)="eliminarTema(tema.id!)">Eliminar</button>
+      <button *ngIf="esAdmin" class="btn btn-warning btn-sm" (click)="editarTema(tema)">Editar</button>
+      <p class="text-muted mb-1">
+      Publicado por <b>{{ tema.username }}</b>
+      el {{ tema.fechaCreacion | date:'short' }}
+      </p>
+      <div>
+        <button *ngIf="usuarioLogueado" class="btn btn-outline-success btn-sm me-2" (click)="votarPositivo(tema.id!)">
+        👍 {{ tema.votosPositivos || 0 }}
+        </button>
+        <button *ngIf="usuarioLogueado" class="btn btn-outline-danger btn-sm me-2" (click)="votarNegativo(tema.id!)">
+        👎 {{ tema.votosNegativos || 0 }}
+        </button>
+      </div>
+          <app-comentarios [temaId]="tema.id!"></app-comentarios>
+    </ng-container>
+
+    <ng-template #edicionTema>
+      <input [(ngModel)]="nuevoTitulo" class="form-control mb-2" placeholder="Nuevo título">
+      <textarea [(ngModel)]="nuevoContenido" class="form-control mb-2" placeholder="Nuevo contenido"></textarea>
+      <button class="btn btn-success btn-sm me-2" (click)="guardarEdicion()">Guardar</button>
+      <button classbtn="btn-secondary btn-sm" (click)="cancelarEdicion()">Cancelar</button>
+    </ng-template>
+
   </div>
 </div>
 </div>

@@ -102,6 +102,31 @@ public ResponseEntity<?> votarNegativo(@PathVariable Long id, @RequestParam Long
   return ResponseEntity.ok(tema);
 }
 
+// Eliminar tema
+@DeleteMapping("/{id}")
+public ResponseEntity<?> eliminarTema(@PathVariable Long id) {
+    if (!temaRepository.existsById(id)) {
+        return ResponseEntity.notFound().build();
+    }
+    temaRepository.deleteById(id);
+    return ResponseEntity.ok("Tema eliminado");
+}
+
+// Editar tema    
+@PutMapping("/{id}")
+public ResponseEntity<?> editarTema(@PathVariable Long id, @RequestBody Tema datos) {
+Optional<Tema> temaOpt = temaRepository.findById(id);
+if (temaOpt.isPresent()) {
+    Tema t = temaOpt.get();
+    t.setTitulo(datos.getTitulo());
+    t.setContenido(datos.getContenido());
+    temaRepository.save(t);
+    return ResponseEntity.ok(t);
+} {
+    return ResponseEntity.notFound().build();
+}
+}
+
   // Clase interna para recibir el JSON
   public static class TemaRequest {
       public String titulo;

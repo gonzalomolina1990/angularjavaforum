@@ -29,6 +29,14 @@ crear(tema: Tema): Observable<Tema> {
   return this.http.post<Tema>(`${this.apiUrl}/crear`, tema);
 }
 
+eliminar(id: number): Observable<any> {
+return this.http.delete(`${this.apiUrl}/${id}`);
+}
+
+editar(id: number, datos: {titulo: string, contenido: string}): Observable<Tema> {
+ return this.http.put<Tema>(`${this.apiUrl}/${id}`, datos);
+}
+
 votarPositivo(id: number, usuarioId: number): Observable<Tema> {
 return this.http.post<Tema>(`${this.apiUrl}/${id}/votar-positivo?usuarioId=${usuarioId}`, {});
 }

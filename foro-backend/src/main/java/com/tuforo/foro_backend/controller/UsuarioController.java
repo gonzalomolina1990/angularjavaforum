@@ -49,4 +49,28 @@ public static class UsuarioDTO {
     return usuarioRepository.save(usuario);
     }
 
+@DeleteMapping("/{id}")
+public ResponseEntity<?> eliminarUsuario(@PathVariable Long id) {
+    if (!usuarioRepository.existsById(id)) {
+        return ResponseEntity.notFound().build();
+    }
+    usuarioRepository.deleteById(id);
+    return ResponseEntity.ok("Usuario eliminado");
+}
+
+// Editar usuario
+@PutMapping("/{id}")
+public ResponseEntity<?> editarUsuario(@PathVariable Long id, @RequestBody Usuario datos) {
+    Optional<Usuario> usuarioOpt = usuarioRepository.findById(id);
+    if (usuarioOpt.isPresent()) {
+        Usuario u = usuarioOpt.get();
+        u.setUsername(datos.getUsername());
+        u.setPassword(datos.getPassword());
+        u.setRol(datos.getRol());
+        usuarioRepository.save(u);
+        return ResponseEntity.ok(u);
+    } else            return ResponseEntity.notFound().build();
+    }
+
+
 }

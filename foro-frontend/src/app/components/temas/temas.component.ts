@@ -16,6 +16,11 @@ temas: Tema[] = [];
 titulo = '';
 contenido = '';
 mensaje = '';
+mensajeVoto: string = '';
+temaEditando: Tema | null = null;
+nuevoTitulo: string = '';
+nuevoContenido: string = '';
+
 
 constructor(private temaService: TemaService) {}
 
@@ -51,8 +56,38 @@ usuarioId: Number(usuarioId)
 });
 }
 
-mensajeVoto: string = '';
+eliminarTema(id: number) {
+if (!confirm('¿Seguro que deseas eliminar este tema?')) return;
+this.temaService.eliminar(id).subscribe(() => {
+ this.cargarTemas();
+});
+}
 
+editarTema(tema: Tema) {
+ this.temaEditando = tema;
+ this.nuevoTitulo = tema.titulo;
+ this.nuevoContenido = tema.contenido;
+}
+
+guardarEdicion() {
+ if (!this.temaEditando) return;
+ this.temaService.editar(this.temaEditando.id!, {
+   titulo: this.nuevoTitulo,
+   contenido: this.nuevoContenido
+}).subscribe({
+   next: tema => {
+     this.mensaje = 'Tema editado correctamente';
+     this.temaEditando = null;
+     this.cargarTemas();
+   },
+   error: err => {
+     this.mensaje = 'Error al editar tema'    }
+ });
+}
+
+cancelarEdicion() {
+ this.temaEditando = null;
+}
 
 votarPositivo(id: number) {
 const usuarioId = localStorage.getItem('usuarioId');
@@ -92,10 +127,17 @@ this.temaService.votarNegativo(id, Number(usuarioId)).subscribe({
      setTimeout(() => this.mensajeVoto = '', 3000);
   }
 });
+
 }
+
+
 
 get usuarioLogueado(): boolean {
   return !!localStorage.getItem('usuario');
+}
+
+get esAdmin(): boolean {
+return localStorage.getItem('rol') === 'ADMIN';
 }
 
 }
