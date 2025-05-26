@@ -1,0 +1,14 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<div class="container-fluid">
+  <a class="navbar-brand" href="#">Foro Java + Angular</a>
+  <div class="d-flex align-items-center ms-auto">
+    <ng-container *ngIf="usuarioLogueado; else noLogin">
+      <span class="navbar-text me-3">Bienvenido, <b>{{ usuarioLogueado }}</b></span>
+      <button class="btn btn-outline-light btn-sm" (click)="onLogout()">Logout</button>
+   ng-container>
+    <ng-template #noLogin>
+      <span class="navbar-text text-light">No has iniciado sesión</span>
+    </ng-template>
+  </div>
+</div>
+</nav>
