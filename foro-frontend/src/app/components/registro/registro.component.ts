@@ -17,16 +17,15 @@ mensaje = '';
 constructor(private usuarioService: UsuarioService) {}
 
 registrar() {
-  this.usuarioService.registrar({ username: this.username, password: this.password })
-    .subscribe({
-      next: usuario => {
-        this.mensaje = 'Usuario registrado con éxito!';
-        this.username = '';
-        this.password = '';
-      },
-      error: err => {
-        this.mensaje = 'Error al registrar usuario: ' + (err.error?.message || err.message);
-      }
-    });
+this.usuarioService.registrar({ username: this.username, password: this.password }).subscribe({
+  next: (respuesta: any) => {
+    this.mensaje = 'Usuario registrado con éxito!';
+    this.username = '';
+    this.password = '';
+  },
+  error: err => {
+    this.mensaje = 'Error al registrar usuario: ' + (err.error?.message || err.error || err.message);
+  }
+});
 }
 }
