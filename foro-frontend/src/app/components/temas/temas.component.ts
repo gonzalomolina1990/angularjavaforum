@@ -51,16 +51,47 @@ usuarioId: Number(usuarioId)
 });
 }
 
+mensajeVoto: string = '';
+
+
 votarPositivo(id: number) {
 const usuarioId = localStorage.getItem('usuarioId');
 if (!usuarioId) return;
-this.temaService.votarPositivo(id, Number(usuarioId)).subscribe(() => this.cargarTemas());
+this.temaService.votarPositivo(id, Number(usuarioId)).subscribe({
+  next: ()=>{
+    this.cargarTemas();
+    this.mensajeVoto ="";
+  },
+  error: err => {
+    if(err.error && typeof err.error === "string" && err.error.includes('Ya votaste')){
+      this.mensajeVoto = 'Ya votaste este tema';
+    } else {
+      this.mensajeVoto = 'Error al votar.';
+    }
+     this.cargarTemas();
+     setTimeout(() => this.mensajeVoto = '', 3000);
+  }
+});
 }
 
 votarNegativo(id: number) {
 const usuarioId = localStorage.getItem('usuarioId');
 if (!usuarioId) return;
-this.temaService.votarNegativo(id, Number(usuarioId)).subscribe(() => this.cargarTemas());
+this.temaService.votarNegativo(id, Number(usuarioId)).subscribe({
+  next: ()=>{
+    this.cargarTemas();
+    this.mensajeVoto ="";
+  },
+  error: err => {
+    if(err.error && typeof err.error === "string" && err.error.includes('Ya votaste')){
+      this.mensajeVoto = 'Ya votaste este tema';
+    } else {
+      this.mensajeVoto = 'Error al votar.';
+    }
+     this.cargarTemas();
+     setTimeout(() => this.mensajeVoto = '', 3000);
+  }
+});
 }
 
 get usuarioLogueado(): boolean {
