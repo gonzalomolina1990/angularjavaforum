@@ -2,6 +2,7 @@ package com.tuforo.foro_backend.controller;
 
 import com.tuforo.foro_backend.model.Usuario;
 import com.tuforo.foro_backend.repository.UsuarioRepository;
+import com.tuforo.foro_backend.dto.UsuarioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public ResponseEntity<?> login(@RequestBody Usuario usuario) {
       Usuario usuarioEnBD = usuarioOptional.get();
       if (usuarioEnBD.getPassword().equals(usuario.getPassword())) {
           // Devuelve SOLO id y username
-          return ResponseEntity.ok(new UsuarioDTO(usuarioEnBD.getId(), usuarioEnBD.getUsername()));
+          return ResponseEntity.ok(new UsuarioDTO(usuarioEnBD.getId(), usuarioEnBD.getUsername(), usuarioEnBD.getRol()));
       } else {
           return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Contraseña incorrecta");
       }
@@ -33,29 +34,29 @@ public ResponseEntity<?> login(@RequestBody Usuario usuario) {
   }
 }
 
-// DTO interno
-public static class UsuarioDTO {
-  public Long id;
-  public String username;
 
-  public UsuarioDTO(Long id, String username) {
-      this.id = id;
-      this.username = username;
-  }
+@PostMapping("/registro")
+public ResponseEntity<?> registrarUsuario(@RequestBody Usuario usuario) {
+    // Asigna rol USER por defecto no viene
+    if (usuario.getRol() == null || usuario.getRol().isEmpty()) {
+        usuario.setRol("USER");
+    }
+    Usuario nuevoUsuario = usuarioRepository.save(usuario);
+    return ResponseEntity.ok(new UsuarioDTO(
+        nuevoUsuario.getId(),
+        nuevoUsuario.getUsername(),
+        nuevoUsuario.getRol()
+    ));
 }
 
- @PostMapping("/registro")
-    public Usuario registrarUsuario(@RequestBody Usuario usuario) {
-    return usuarioRepository.save(usuario);
-    }
-
+// ELIMINAR USUARIO
 @DeleteMapping("/{id}")
 public ResponseEntity<?> eliminarUsuario(@PathVariable Long id) {
     if (!usuarioRepository.existsById(id)) {
         return ResponseEntity.notFound().build();
     }
     usuarioRepository.deleteById(id);
-    return ResponseEntity.ok("Usuario eliminado");
+    return ResponseEntity.ok(" eliminado");
 }
 
 // Editar usuario
@@ -68,9 +69,15 @@ public ResponseEntity<?> editarUsuario(@PathVariable Long id, @RequestBody Usuar
         u.setPassword(datos.getPassword());
         u.setRol(datos.getRol());
         usuarioRepository.save(u);
-        return ResponseEntity.ok(u);
-    } else            return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(new UsuarioDTO(
+            u.getId(),
+            u.getUsername(),
+            u.getRol()
+        ));
+    } else {
+        return ResponseEntity.notFound().build();
     }
+}
 
 
 }

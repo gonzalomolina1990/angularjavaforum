@@ -24,6 +24,7 @@ this.usuarioService.login({ username: this.username, password: this.password })
       // Guarda el id y el username en localStorage
       localStorage.setItem('usuario', respuesta.username);
       localStorage.setItem('usuarioId', respuesta.id.toString());
+      localStorage.setItem('rol', respuesta.rol); 
       this.username = '';
       this.password = '';
     },
