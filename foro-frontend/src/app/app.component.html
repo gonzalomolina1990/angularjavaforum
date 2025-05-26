@@ -1,4 +1,18 @@
 <app-navbar [usuarioLogueado]="usuarioLogueado" (logout)="logout()"></app-navbar>
+
+<div class="alert alert-info mt-4">
+<h5>Sobre este foro</h5>
+  Este foro fue desarrollado como proyecto fullstack utilizando:
+  <ul>
+    <li><b>Frontend:</b> Angular 17 + Bootstrap 5</li>
+    <li><b>Backend:</b> Java Spring Boot 3 (API REST)</li>
+    <li><b>Base de datos:</b> H2 (modo archivo, solo para demo)</li>
+    <li><b>Deploy Frontend:</b> Vercel</li>
+    <li><b>Deploy Backend:</b> Render.com</li>
+  </ul>
+  <b>Nota importante:</b> La primera vez que accedes o tras un tiempo de inactividad, el backend puede demorar hasta 30 segundos en responder porque Render "duerme" servicios gratuitos cuando no hay actividad. Los siguientes accesos serán mucho más rápidos.
+</div>
+
 <div class="container mt-4">
 <div class="row justify-content-center">
   <div class="col-md-5" *ngIf="!usuarioLogueado">
