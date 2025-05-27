@@ -9,10 +9,28 @@
 
 <div class="container mt-4">
 <div class="row justify-content-center">
-  <div class="col-md-5" *ngIf="!usuarioLogueado">
+  <!-- Solo muestra los botones en mobile -->
+  <div class="d-block d-md-none mb-3">
+  <button class="btn btn-primary w-100 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#registroCollapse">
+    Registro de Usuario
+  </button>
+  <div class="" id="registroCollapse">
     <app-registro></app-registro>
-    <hr>
+  </div>
+
+  <button class="btn btn-secondary w-100 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#loginCollapse">
+    Iniciar Sesión
+  </button>
+  <div class="collapse" id="loginCollapse">
     <app-login></app-login>
+  </div>
+  </div>
+
+  <!-- En desktop (md+) muestra ambos formularios normalmente -->
+  <div class="d-none d-block">
+  <app-registro></app-registro>
+  <hr>
+  <app-login></app-login>
   </div>
   <div class="col-md-7">
     <app-temas></app-temas>
