@@ -52,7 +52,7 @@
             👎 {{ tema.votosNegativos || 0 }}
           </button>
         </div>
-        <-comentarios [temaId]="tema.id!"></app-comentarios>
+        <app-comentarios [temaId]="tema.id!"></app-comentarios>
       </ng-container>
 
       <ng-template #edicionTema>
