@@ -74,8 +74,8 @@ public ResponseEntity<?> votarPositivo(@PathVariable Long id, @RequestParam Long
            // Ya es positivo, hace nada
            return ResponseEntity.badRequest().body("Ya votaste positivo este tema.");
        } else {
-           // Cambia el voto a negativo
-           voto.setPositivo(false);
+           // Cambia el voto a positivo
+           voto.setPositivo(true);
            votoRepository.save(voto);
        }
    } else {
@@ -107,8 +107,8 @@ public ResponseEntity<?> votarNegativo(@PathVariable Long id, @RequestParam Long
            // Ya es negativo, hace nada
            return ResponseEntity.badRequest().body("Ya votaste negativo este tema.");
        } else {
-           // Cambia el voto a positivo
-           voto.setPositivo(true);
+           // Cambia el voto a negativo
+           voto.setPositivo(false);
            votoRepository.save(voto);
        }
    } else {
