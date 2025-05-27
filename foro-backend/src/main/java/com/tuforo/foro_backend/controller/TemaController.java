@@ -66,13 +66,24 @@ public ResponseEntity<?> votarPositivo(@PathVariable Long id, @RequestParam Long
   Usuario usuario = usuarioRepository.findById(usuarioId)
           .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-  // ¿Ya votó este usuario este tema?
-  if (votoRepository.findByUsuarioAndTema(usuario, tema).isPresent()) {
-      return ResponseEntity.badRequest().body("Ya votaste este tema.");
-  }
 
-  Voto voto = new Voto(usuario, tema, true);
-  votoRepository.save(voto);
+   Optional<Voto> votoOpt = votoRepository.findByUsuarioAndTema(usuario, tema);
+   if (votoOpt.isPresent()) {
+       Voto voto = votoOpt.get();
+       if (voto.isPositivo()) {
+           // Ya es positivo, hace nada
+           return ResponseEntity.badRequest().body("Ya votaste positivo este tema.");
+       } else {
+           // Cambia el voto a negativo
+           voto.setPositivo(false);
+           votoRepository.save(voto);
+       }
+   } else {
+       // No había voto, crea uno
+       Voto voto = new Voto(usuario, tema, true);
+       votoRepository.save(voto);
+   }
+
 
   // Actualiza los contadores (opcional, puedes calcularlos dinámicamente si prefieres)
   tema.setVotosPositivos(votoRepository.countByTemaAndPositivo(tema, true));
@@ -89,12 +100,22 @@ public ResponseEntity<?> votarNegativo(@PathVariable Long id, @RequestParam Long
   Usuario usuario = usuarioRepository.findById(usuarioId)
           .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-  if (votoRepository.findByUsuarioAndTema(usuario, tema).isPresent()) {
-      return ResponseEntity.badRequest().body("Ya votaste este tema.");
-  }
-
-  Voto voto = new Voto(usuario, tema, false);
-  votoRepository.save(voto);
+   Optional<Voto> votoOpt = votoRepository.findByUsuarioAndTema(usuario, tema);
+   if (votoOpt.isPresent()) {
+       Voto voto = votoOpt.get();
+       if (!voto.isPositivo()) {
+           // Ya es negativo, hace nada
+           return ResponseEntity.badRequest().body("Ya votaste negativo este tema.");
+       } else {
+           // Cambia el voto a positivo
+           voto.setPositivo(true);
+           votoRepository.save(voto);
+       }
+   } else {
+       // No había voto, crea uno
+       Voto voto = new Voto(usuario, tema, false);
+       votoRepository.save(voto);
+   }
 
   tema.setVotosPositivos(votoRepository.countByTemaAndPositivo(tema, true));
   tema.setVotosNegativos(votoRepository.countByTemaAndPositivo(tema, false));
