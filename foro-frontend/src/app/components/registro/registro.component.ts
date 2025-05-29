@@ -13,6 +13,8 @@ export class RegistroComponent {
 username = '';
 password = '';
 mensaje = '';
+tipoAlerta: string = 'success'; // 'success', 'danger', 'warning', etc.
+
 
 constructor(private usuarioService: UsuarioService) {}
 
@@ -22,9 +24,13 @@ this.usuarioService.registrar({ username: this.username, password: this.password
     this.mensaje = 'Usuario registrado con éxito!';
     this.username = '';
     this.password = '';
+    this.tipoAlerta = 'success';
+
   },
   error: err => {
     this.mensaje = 'Error al registrar usuario: ' + (err.error?.message || err.error || err.message);
+    this.tipoAlerta = 'danger';
+
   }
 });
 }

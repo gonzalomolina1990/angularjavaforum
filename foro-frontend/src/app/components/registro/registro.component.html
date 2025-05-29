@@ -23,6 +23,6 @@
     </div>
     <button type="submit" class="btn btn-primary w-100">Registrarse</button>
   </form>
-  <div *ngIf="mensaje" class="alert alert-danger mt-3 py-2 text-center">{{ mensaje }}</div>
+  <div *ngIf="mensaje" class="alert mt-3 py-2 text-center" [ngClass]="'alert-' + tipoAlerta">{{ mensaje }}</div>
 </div>
 </div>

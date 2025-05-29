@@ -16,6 +16,7 @@ temas: Tema[] = [];
 titulo = '';
 contenido = '';
 mensaje = '';
+tipoAlerta: string = 'success'; // 'success', 'danger', 'warning', etc.
 mensajeVoto: string = '';
 temaEditando: Tema | null = null;
 nuevoTitulo: string = '';
@@ -31,7 +32,10 @@ ngOnInit() {
 cargarTemas() {
   this.temaService.listar().subscribe({
     next: temas => this.temas = temas,
-    error: err => this.mensaje = 'Error al cargar temas'
+    error: err => {
+      this.mensaje = 'Error al cargar temas';     
+      this.tipoAlerta = 'danger';
+}
   });
 }
 
@@ -39,6 +43,7 @@ crearTema() {
 const usuarioId = localStorage.getItem('usuarioId');
 if (!usuarioId) {
   this.mensaje = 'Debes estar logueado para crear un tema.';
+  this.tipoAlerta = 'warning';
   return;
 }
 this.temaService.crear({
@@ -50,9 +55,13 @@ usuarioId: Number(usuarioId)
     this.mensaje = 'Tema creado!';
     this.titulo = '';
     this.contenido = '';
+    this.tipoAlerta = 'success';
     this.cargarTemas();
   },
-  error: err => this.mensaje = 'Error al crear tema'
+  error: err => {
+    this.mensaje = 'Error al crear tema';
+    this.tipoAlerta = 'danger';
+  }
 });
 }
 
@@ -77,11 +86,14 @@ guardarEdicion() {
 }).subscribe({
    next: tema => {
      this.mensaje = 'Tema editado correctamente';
+     this.tipoAlerta = 'success';
      this.temaEditando = null;
      this.cargarTemas();
    },
    error: err => {
-     this.mensaje = 'Error al editar tema'    }
+     this.mensaje = 'Error al editar tema';
+      this.tipoAlerta = 'danger';
+    }
  });
 }
 
@@ -100,8 +112,12 @@ this.temaService.votarPositivo(id, Number(usuarioId)).subscribe({
   error: err => {
     if(err.error && typeof err.error === "string" && err.error.includes('Ya votaste')){
       this.mensajeVoto = 'Ya votaste este tema';
+      this.tipoAlerta = 'warning';
+
     } else {
       this.mensajeVoto = 'Error al votar.';
+      this.tipoAlerta = 'danger';
+
     }
      this.cargarTemas();
      setTimeout(() => this.mensajeVoto = '', 3000);
@@ -120,8 +136,12 @@ this.temaService.votarNegativo(id, Number(usuarioId)).subscribe({
   error: err => {
     if(err.error && typeof err.error === "string" && err.error.includes('Ya votaste')){
       this.mensajeVoto = 'Ya votaste este tema';
+      this.tipoAlerta = 'warning';
+
     } else {
       this.mensajeVoto = 'Error al votar.';
+      this.tipoAlerta = 'danger';
+
     }
      this.cargarTemas();
      setTimeout(() => this.mensajeVoto = '', 3000);

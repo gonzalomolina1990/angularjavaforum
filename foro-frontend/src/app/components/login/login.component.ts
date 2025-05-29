@@ -13,6 +13,8 @@ export class LoginComponent {
 username = '';
 password = '';
 mensaje = '';
+tipoAlerta: string = 'success'; // 'success', 'danger', 'warning', etc.
+
 
 constructor(private usuarioService: UsuarioService) {}
 
@@ -21,6 +23,8 @@ this.usuarioService.login({ username: this.username, password: this.password })
   .subscribe({
     next: (respuesta: any) => {
       this.mensaje = 'Login exitoso!';
+      this.tipoAlerta = 'success';
+
       // Guarda el id y el username en localStorage
       localStorage.setItem('usuario', respuesta.username);
       localStorage.setItem('usuarioId', respuesta.id.toString());
@@ -30,6 +34,8 @@ this.usuarioService.login({ username: this.username, password: this.password })
     },
     error: err => {
       this.mensaje = 'Error al iniciar sesión: ' + (err.error?.message || err.message);
+      this.tipoAlerta = 'danger';
+
     }
   });
 }

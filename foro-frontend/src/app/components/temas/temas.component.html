@@ -1,6 +1,6 @@
 <div class="container mt-4">
 
-<div *ngIf="mensajeVoto" class="alert alert-warning text-center">
+<div *ngIf="mensajeVoto" class="alert text-center" [ngClass]="'alert-' + tipoAlerta">
 {{ mensajeVoto }}
 </div>
 <h2>Temas del Foro</h2>
@@ -14,7 +14,7 @@
     <textarea [(ngModel)]="contenido" name="contenido" class="form-control" required></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Crear Tema</button>
-  <span class="ms-3 text-success" *ngIf="mensaje">{{ mensaje }}</span>
+  <span class="ms-3" [ngClass]="'alert-' + tipoAlerta" *ngIf="mensaje">{{ mensaje }}</span>
 </form>
 <p *ngIf="!usuarioLogueado">Debes iniciar sesión para crear un tema.</p>
 
