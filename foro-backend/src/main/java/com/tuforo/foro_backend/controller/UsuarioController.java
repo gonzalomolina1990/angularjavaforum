@@ -46,10 +46,16 @@ public List<UsuarioDTO> listarUsuarios() {
 
 @PostMapping("/registro")
 public ResponseEntity<?> registrarUsuario(@RequestBody Usuario usuario) {
-    // Asigna rol USER por defecto no viene
-    if (usuario.getRol() == null || usuario.getRol().isEmpty()) {
-        usuario.setRol("USER");
-    }
+   // Validación básica
+   if (usuario.getUsername() == null || usuario.getUsername().trim().isEmpty()) {
+       return ResponseEntity.badRequest().body("El nombre de usuario es obligatorio.");
+   }
+   if (usuario.getPassword() == null || usuario.getPassword().trim().isEmpty()) {
+       return ResponseEntity.badRequest().body("La contraseña es obligatoria.");
+   }
+   if (usuario.getRol() == null || usuario.getRol().isEmpty()) {
+       usuario.setRol("USER");
+   }
     Usuario nuevoUsuario = usuarioRepository.save(usuario);
     return ResponseEntity.ok(new UsuarioDTO(
         nuevoUsuario.getId(),
