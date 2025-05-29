@@ -25,7 +25,21 @@
     <app-login></app-login>
   </div>
 
-  <!-- Lista de usuarios -->
+
+
+  </div>
+
+  <!-- En desktop (md+) muestra ambos formularios normalmente -->
+  <div class="d-none d-md-block col-md-6">
+  <app-registro></app-registro>
+  <br>
+  <app-login></app-login>
+  </div>
+  <div class="col-md-6">
+    <app-temas></app-temas>
+  </div>
+
+    <!-- Lista de usuarios -->
   <div class="card mt-4">
   <div class="card-header">Usuarios registrados</div>
   <ul class="list-group list-group-flush">
@@ -39,17 +53,6 @@
   </ul>
   <div *ngIf="mensajeUsuarios" class="alert alert-warning m-2 text-center">{{ mensajeUsuarios }}</div>
   </div>
-
-  </div>
-
-  <!-- En desktop (md+) muestra ambos formularios normalmente -->
-  <div class="d-none d-md-block col-md-6">
-  <app-registro></app-registro>
-  <br>
-  <app-login></app-login>
-  </div>
-  <div class="col-md-6">
-    <app-temas></app-temas>
-  </div>
+  
 </div>
 </div>
