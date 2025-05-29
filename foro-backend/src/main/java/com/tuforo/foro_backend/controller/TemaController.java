@@ -42,7 +42,7 @@ public class TemaController {
 
 @GetMapping("/todos")
 public List<TemaDTO> listarTemas() {
-  return temaRepository.findAll().stream().map(tema -> {
+  return temaRepository.findAllByOrderByFechaCreacionDesc().stream().map(tema -> {
   String username = tema.getUsuario() != null ? tema.getUsuario().getUsername() : "Desconocido";
       int positivos = votoRepository.countByTemaAndPositivo(tema, true);
       int negativos = votoRepository.countByTemaAndPositivo(tema, false);

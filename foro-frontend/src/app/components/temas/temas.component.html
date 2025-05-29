@@ -3,7 +3,7 @@
 <div *ngIf="mensajeVoto" class="alert text-center" [ngClass]="'alert-' + tipoAlerta">
 {{ mensajeVoto }}
 </div>
-<h2>Temas del Foro</h2>
+<h2>Crear tema</h2>
 <form *ngIf="usuarioLogueado" (ngSubmit)="crearTema()" class="mb-4 card card-body">
   <div class="mb-3">
     <label class="form-label">Título</label>
@@ -18,7 +18,7 @@
 </form>
 <p *ngIf="!usuarioLogueado">Debes iniciar sesión para crear un tema.</p>
 
-
+<h2>Temas del Foro</h2>
 <div class="accordion" id="temasAccordion">
 <div class="accordion-item" *ngFor="let tema of temas; let i = index">
   <h2 class="accordion-header" id="heading{{i}}">
