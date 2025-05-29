@@ -24,6 +24,22 @@
   <div class="collapse" id="loginCollapse">
     <app-login></app-login>
   </div>
+
+  <!-- Lista de usuarios -->
+  <div class="card mt-4">
+  <div class="card-header">Usuarios registrados</div>
+  <ul class="list-group list-group-flush">
+    <li *ngFor="let user of usuarios" class="list-group-item d-flex justify-content-between align-items-center">
+      <span>
+        <b>{{ user.username }}</b>
+        <span class="badge bg-secondary ms-2">{{ user.rol }}</span>
+      </span>
+      <button *ngIf="esAdmin" class="btn btn-danger btn-sm" (click)="eliminarUsuario(user.id!)">Eliminar</button>
+    </li>
+  </ul>
+  <div *ngIf="mensajeUsuarios" class="alert alert-warning m-2 text-center">{{ mensajeUsuarios }}</div>
+  </div>
+
   </div>
 
   <!-- En desktop (md+) muestra ambos formularios normalmente -->
