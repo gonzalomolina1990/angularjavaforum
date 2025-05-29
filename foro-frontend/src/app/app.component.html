@@ -11,7 +11,7 @@
 <div class="row justify-content-center">
 
   <div *ngIf="!usuarioLogueado" class="col-12">
-    
+
   <!-- Solo muestra los botones en mobile -->
       <div class="d-block d-md-none mb-3">
         <button class="btn btn-primary w-100 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#registroCollapse">
@@ -33,7 +33,7 @@
       </div>
 
       <!-- En desktop (md+) muestra ambos formularios normalmente -->
-      <div class="d-none d-md-block col-md-6" >
+      <div class="d-none d-md-flex justify-content-evenly align-items-start gap-4" >
       <app-registro></app-registro>
       <br>
       <app-login></app-login>
